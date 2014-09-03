@@ -25,7 +25,7 @@
         date = "" + d.getDate() + "-" + (d.getMonth() + 1) + "-"
                 + d.getFullYear();
         alert(date)
-        alert(imageData);  
+      //  alert(imageData);  
 
         // Get image handle
         //
@@ -39,7 +39,7 @@
         //
         smallImage.src = "data:image/jpeg;base64," + imageData;
 
-        alert("data:image/jpeg;base64," + imageData)
+       // alert("data:image/jpeg;base64," + imageData)
 
         //This part is for saving the capture photo
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
