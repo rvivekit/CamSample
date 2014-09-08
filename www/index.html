@@ -122,9 +122,9 @@
 
     }
 
-    function uploadPictureServer() {
+    function uploadPictureServer(smallImage) {
         alert("InUpserver");
-        var formData = { str: "ravid654" };
+        var formData = { str: smallImage };
 
         $.ajax({
             type: "POST",
@@ -149,7 +149,7 @@
     <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From
         Photo Library</button>
     <br>
-    <button onclick="uploadPictureServer();">From
+    <button onclick="uploadPictureServer('SmallImage');">From
         PhotoAlbum</button>
     <br>
     <img style="display: none; width: 60px; height: 60px;" id="smallImage"
