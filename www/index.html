@@ -123,15 +123,16 @@
     }
 
     function uploadPictureServer(IMAGEDATA) {
+        alert("InUpserver");
         var formData = { str: "ravid654" };
         $.ajax({
             type: "POST",
             data: formData,
             url: "http://localhost:29586/SampleService.asmx/HelloWorldWithName"
         }).then(function (data) {
-            debugger;
-            $('.greeting-id').append(data.documentElement.innerHTML);
-            $('.greeting-content').append(data.content);
+            //debugger;
+            //$('.greeting-id').append(data.documentElement.innerHTML);
+            //$('.greeting-content').append(data.content);
         });
     }
 </script>
