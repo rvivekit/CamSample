@@ -122,15 +122,15 @@
     }
 
     function uploadPictureServer(smallImage) {
-        alert("InUpserver");
+       // alert("InUpserver");
         var formData = { str: smallImage , storenumber: $("#dd").val()};
 
         $.ajax({
             type: "POST",
             data: formData,
-            url: "http://samplews.createalytics.com/sampleservice.asmx/HelloWorldWithName"
+            url: "http://samplews.createalytics.com/sampleservice.asmx/UploadPicture"
         }).then(function (data) {
-            alert(data.documentElement.innerHTML);
+          //  alert(data.documentElement.innerHTML);
             //debugger;
             //$('.greeting-id').append(data.documentElement.innerHTML);
             //$('.greeting-content').append(data.content);
@@ -146,9 +146,8 @@
   <option value="4">Store 4</option>
 </select>
     <button onclick="capturePhoto();">Capture Photo</button>
-    <button onclick="uploadPictureServer('asd');">Capture Photo</button>
-    <img style="display: none; width: 60px; height: 60px;" id="smallImage"
-        src="" />
+   
+    <img style="display: none; width: 70px; height: 60px;" id="smallImage" src="" />
     <img style="display: none;" id="largeImage" src="" />
 </body>
 </html>
