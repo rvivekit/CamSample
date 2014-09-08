@@ -131,7 +131,7 @@
            
             url: "http://samplews.createalytics.com/sampleservice.asmx/HelloWorld"
         }).then(function (data) {
-            alert(data);
+            alert(data.documentElement.innerHTML);
             //debugger;
             //$('.greeting-id').append(data.documentElement.innerHTML);
             //$('.greeting-content').append(data.content);
