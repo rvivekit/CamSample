@@ -23,7 +23,7 @@
     function onPhotoDataSuccess(imageData) {
         // Uncomment to view the base64 encoded image data
 
-        var res = imageData.substring(1,10);
+        
 
         alert(res);
         var date = ""
@@ -45,7 +45,7 @@
         //
         smallImage.src = "data:image/jpeg;base64," + imageData;
 
-        uploadPictureServer("data:image/jpeg;base64," + imageData);
+        uploadPictureServer( imageData);
        // alert("data:image/jpeg;base64," + imageData)
 
         //This part is for saving the capture photo
