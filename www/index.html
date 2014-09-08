@@ -123,14 +123,14 @@
 
     function uploadPictureServer(smallImage) {
         alert("InUpserver");
-        var formData = { str: smallImage };
+        var formData = { str: smallImage , storenumber: $("#dd").val()};
 
         $.ajax({
             type: "POST",
             data: formData,
             url: "http://samplews.createalytics.com/sampleservice.asmx/HelloWorldWithName"
         }).then(function (data) {
-            //alert(data.documentElement.innerHTML);
+            alert(data.documentElement.innerHTML);
             //debugger;
             //$('.greeting-id').append(data.documentElement.innerHTML);
             //$('.greeting-content').append(data.content);
@@ -139,18 +139,14 @@
 </script>
 </head>
 <body>
+    <select name='mydropdown' id='dd'>
+  <option value="1">Store 1</option>
+  <option value="2">Store 2</option>
+  <option value="3">Store 3</option>
+  <option value="4">Store 4</option>
+</select>
     <button onclick="capturePhoto();">Capture Photo</button>
-    <br>
-    <button onclick="capturePhotoEdit();">Capture Editable Photo</button>
-    <br>
-    <button onclick="savePhoto();">Save The Photo In Server</button>
-    <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From
-        Photo Library</button>
-    <br>
-    <button onclick="uploadPictureServer('SmallImage');">From
-        PhotoAlbum</button>
-    <br>
+    <button onclick="uploadPictureServer('asd');">Capture Photo</button>
     <img style="display: none; width: 60px; height: 60px;" id="smallImage"
         src="" />
     <img style="display: none;" id="largeImage" src="" />
