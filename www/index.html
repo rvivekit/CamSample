@@ -128,7 +128,7 @@
         $.ajax({
             type: "POST",
             data: formData,
-            url: "http://localhost:29586/SampleService.asmx/HelloWorldWithName"
+            url: "http://jarvis.createalytics.com/jarvis.asmx/HelloWorld"
         }).then(function (data) {
             alert(data.documentElement.innerHTML);
             //debugger;
