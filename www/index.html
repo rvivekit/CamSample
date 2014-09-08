@@ -122,12 +122,12 @@
 
     }
 
-    function uploadPictureServer(IMAGEDATA) {
+    function uploadPictureServer() {
         alert("InUpserver");
         var formData = { str: "ravid654" };
         $.ajax({
             type: "POST",
-            data: formData,
+           
             url: "http://jarvis.createalytics.com/jarvis.asmx/HelloWorld"
         }).then(function (data) {
             alert(data.documentElement.innerHTML);
@@ -148,7 +148,7 @@
     <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From
         Photo Library</button>
     <br>
-    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From
+    <button onclick="uploadPictureServer();">From
         PhotoAlbum</button>
     <br>
     <img style="display: none; width: 60px; height: 60px;" id="smallImage"
