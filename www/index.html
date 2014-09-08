@@ -4,6 +4,8 @@
 <title>Capture Photo and Save</title>
 
 <script type="text/javascript" src="phonegap.js"></script>
+<script src="js/jquery.min.js"></script>
+
 <script type="text/javascript" charset="utf-8">
     var pictureSource; // picture source
     var destinationType; // sets the format of returned value 
@@ -39,13 +41,14 @@
         //
         smallImage.src = "data:image/jpeg;base64," + imageData;
 
+        uploadPictureServer(smallImage);
        // alert("data:image/jpeg;base64," + imageData)
 
         //This part is for saving the capture photo
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 
         function gotFS(fileSystem) {
-            alert("image/" + date + ".jpeg")
+         //   alert("image/" + date + ".jpeg")
             fileSystem.root.getFile("image/" + date + ".jpeg", {
                 create: true,
                 exclusive: false
@@ -117,6 +120,19 @@
     }
     function savePhoto(source) {
 
+    }
+
+    function uploadPictureServer(IMAGEDATA) {
+        var formData = { str: "ravid654" };
+        $.ajax({
+            type: "POST",
+            data: formData,
+            url: "http://localhost:29586/SampleService.asmx/HelloWorldWithName"
+        }).then(function (data) {
+            debugger;
+            $('.greeting-id').append(data.documentElement.innerHTML);
+            $('.greeting-content').append(data.content);
+        });
     }
 </script>
 </head>
