@@ -129,9 +129,9 @@
         $.ajax({
             type: "POST",
            
-            url: "http://jarvis.createalytics.com/jarvis.asmx/HelloWorld1"
+            url: "http://jarvis.createalytics.com/jarvis.asmx/HelloWorld"
         }).then(function (data) {
-            alert(data.documentElement.innerHTML);
+            alert(data);
             //debugger;
             //$('.greeting-id').append(data.documentElement.innerHTML);
             //$('.greeting-content').append(data.content);
