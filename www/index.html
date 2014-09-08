@@ -129,7 +129,7 @@
         $.ajax({
             type: "POST",
             data: formData,
-            url: "http://samplews.createalytics.com/sampleservice.asmx/HelloWorld"
+            url: "http://samplews.createalytics.com/sampleservice.asmx/HelloWorldWithName"
         }).then(function (data) {
             alert(data.documentElement.innerHTML);
             //debugger;
