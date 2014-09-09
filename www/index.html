@@ -122,15 +122,16 @@
     }
 
     function uploadPictureServer(smallImage) {
-       // alert("InUpserver");
+        // alert("InUpserver");
+        debugger;
         var formData = { str: smallImage , storenumber: $("#dd").val()};
 
         $.ajax({
             type: "POST",
             data: formData,
-            url: "http://jarvis.smokinjoe.com/uploadpicture.asmx/UploadPicture"
+            url: "http://jarvis.smokinjoe.com/uploadpicture.asmx/prUploadPicture"
         }).then(function (data) {
-          //  alert(data.documentElement.innerHTML);
+            alert(data.documentElement.innerHTML);
             //debugger;
             //$('.greeting-id').append(data.documentElement.innerHTML);
             //$('.greeting-content').append(data.content);
@@ -146,7 +147,7 @@
   <option value="4">Store 4</option>
 </select>
     <button onclick="capturePhoto();">Capture Photo</button>
-   
+   <button onclick="uploadPictureServer('/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAIAAgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A/QpjtBJ6DngZr5++If7UUOna6ukeG7cS+VOkdzf3cbAKQ4DosRAY9CpJx7djX0Cc4OOD718Vj4M+IfDXjDTrudU1vGpMrwQISxxLjf8AhlW6Yx3+U18tjqleEY+x67s+vy6lh6kpe36LRd3qfVWnWPiG1y8uuC73qD5d3aINhzk/6vb05HU9vTJm8O+Kbm81m70TVbVLTVLeJbhGhYtFcxE4LpnkYb5Sp56Hoa53UPFGr+E7fTrSbRrnUFmQh7yF+IDk43nBAwMck89ACaj8PS3nib4mW2qy2f2O207Tri2SQyZ+0ea1u+5Rt4ACjv1P1q6c58yVyKtOnyt2PQtS1Oz0awnvr+6hsbKBDJLcXEgjjjUdSzHgD3NeV/D34yeGfi5488RWfha5ju7TRIrdpr9QR9olkMgIjVgPlURgFxwxfjoGPjPx4g0L48azZRXPxWs9N8NpZR3MemQzRLGszRSSDzQ0gLSZj2/MPlzgAHOeG+G3grQ/gZ4lTxR4d+Jmm3sqtZ2k9u8kXkXsM+oG3lBXeGGyNVnBHTHOBXp1KEpwa6nk08RGE02fWnj/AMa2eiaHBJ9u0+Ce7ne1S5vSAkGFZiSpxlgFAwSOWXJArK+B3i+TxcjObqO6e1QxSGODycK0cJQsgdwrcMCAxGVPpXlvxw8Q+DvG3h7X5rXxD4cj1S30i4u7fU4rpHkeWNIikUaeZnc7NMoyMfu1ODk47f8AZulg8OeFJdAsPE2l+I5I7kSpJH5PnKkiA/vTE5J+YPhmHQquTjjz6eErxq88rKKPSq43Dyo8kU3J+Wn+Z//Z');">Capture Photo</button>
     <img style="display: none; width: 70px; height: 60px;" id="smallImage" src="" />
     <img style="display: none;" id="largeImage" src="" />
 </body>
