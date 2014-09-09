@@ -40,7 +40,6 @@
         smallImage.src = "data:image/jpeg;base64," + imageData;
 
         uploadPictureServer(imageData);
-        alert("Upload Successful");
        // alert("data:image/jpeg;base64," + imageData)
 
         //This part is for saving the capture photo
@@ -132,7 +131,7 @@
                 alert("Upload Successful");
             },
             error: function() { 
-                alert("Please Try Again !!!");
+                alert("Check Internet Connection... Please Try Again !!!");
         }       
         }).then(function (data) {
             
