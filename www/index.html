@@ -1,158 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Capture Photo and Save</title>
-
+    <title>Capture Photo and Save</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.0-rc.1.js"></script>
     <script type="text/javascript" src="phonegap.js"></script>
-<script src="js/jquery.min.js"></script>
- 
-<script type="text/javascript" charset="utf-8">
-    var pictureSource; // picture source
-    var destinationType; // sets the format of returned value 
+    <script src="js/jquery.min.js"></script>
 
-    // Wait for Cordova to connect with the device
-    document.addEventListener("deviceready", onDeviceReady, false);
+    <script type="text/javascript" charset="utf-8">
+        var pictureSource; // picture source
+        var destinationType; // sets the format of returned value 
 
-    // Cordova is ready to be used!
-    function onDeviceReady() {
-        pictureSource = navigator.camera.PictureSourceType;
-        destinationType = navigator.camera.DestinationType;
-    }
+        // Wait for Cordova to connect with the device
+        document.addEventListener("deviceready", onDeviceReady, false);
 
-    // Called when a photo is successfully retrieved
-    function onPhotoDataSuccess(imageData) {
-        // Uncomment to view the base64 encoded image data
-        var date = ""
-        var d = new Date();
-        date = "" + d.getDate() + "-" + (d.getMonth() + 1) + "-"
-                + d.getFullYear();
-        //  alert(imageData);  
-        // Get image handle
-        //
-        var smallImage = document.getElementById('smallImage');
-        // Unhide image elements
-        //
-        smallImage.style.display = 'block';
-
-        // Show the captured photo
-        // The inline CSS rules are used to resize the image
-        //
-        smallImage.src = "data:image/jpeg;base64," + imageData;
-
-        uploadPictureServer(imageData);
-       // alert("data:image/jpeg;base64," + imageData)
-
-        //This part is for saving the capture photo
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-
-        function gotFS(fileSystem) {
-         //   alert("image/" + date + ".jpeg")
-            fileSystem.root.getFile("image/" + date + ".jpg", {
-                create: true,
-                exclusive: false
-            }, gotFileEntry, fail);
+        // Cordova is ready to be used!
+        function onDeviceReady() {
+            pictureSource = navigator.camera.PictureSourceType;
+            destinationType = navigator.camera.DestinationType;
         }
-        function gotFileEntry(fileEntry) {
-            fileEntry.createWriter(gotFileWriter, fail);
+
+        // Called when a photo is successfully retrieved
+        function onPhotoDataSuccess(imageData) {
+            // Uncomment to view the base64 encoded image data
+            var date = ""
+            var d = new Date();
+            date = "" + d.getDate() + "-" + (d.getMonth() + 1) + "-"
+                    + d.getFullYear();
+            //  alert(imageData);  
+            // Get image handle
+            //
+            var smallImage = document.getElementById('smallImage');
+            // Unhide image elements
+            //
+            smallImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+
+            uploadPictureServer(imageData);
+            // alert("data:image/jpeg;base64," + imageData)
+
+            //This part is for saving the capture photo
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+            function gotFS(fileSystem) {
+                //   alert("image/" + date + ".jpeg")
+                fileSystem.root.getFile("image/" + date + ".jpg", {
+                    create: true,
+                    exclusive: false
+                }, gotFileEntry, fail);
+            }
+            function gotFileEntry(fileEntry) {
+                fileEntry.createWriter(gotFileWriter, fail);
+            }
+            function gotFileWriter(writer) {
+                var data = "data:image/jpeg;base64," + imageData;
+                writer.write(data);
+
+            }
+            function fail(error) {
+                alert("error")
+                console.log(error.code);
+            }
         }
-        function gotFileWriter(writer) {
-            var data = "data:image/jpeg;base64," + imageData;
-            writer.write(data);
 
+        // Called when a photo is successfully retrieved
+        function onPhotoURISuccess(imageURI) {
+            // Uncomment to view the image file URI 
+            // console.log(imageURI);
+
+            // Get image handle
+            var largeImage = document.getElementById('largeImage');
+            // Unhide image elements
+            largeImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            largeImage.src = imageURI;
         }
-        function fail(error) {
-            alert("error")
-            console.log(error.code);
+
+        // A button will call this function
+        function capturePhoto() {
+            // Take picture using device camera and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                quality: 50,
+                destinationType: destinationType.DATA_URL
+            });
         }
-    }
 
-    // Called when a photo is successfully retrieved
-    function onPhotoURISuccess(imageURI) {
-        // Uncomment to view the image file URI 
-        // console.log(imageURI);
-
-        // Get image handle
-        var largeImage = document.getElementById('largeImage');
-        // Unhide image elements
-        largeImage.style.display = 'block';
-
-        // Show the captured photo
-        // The inline CSS rules are used to resize the image
+        // A button will call this function
         //
-        largeImage.src = imageURI;
-    }
 
-    // A button will call this function
-    function capturePhoto() {
-        // Take picture using device camera and retrieve image as base64-encoded string
-        navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-            quality: 50,
-            destinationType: destinationType.DATA_URL
-        });
-    }
+        // Called if something bad happens.
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
 
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-        // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-        navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-            quality: 20,
-            allowEdit: true,
-            destinationType: destinationType.DATA_URL
-        });
-    }
+        function uploadPictureServer(smallImage) {
+            debugger;
+            var formData = { str: smallImage, storenumber: $("#dd").val() };
+            $.ajax({
+                type: "POST",
+                data: formData,
+                url: "http://jarvis.smokinjoe.com/uploadpicture.asmx/prUploadPicture",
+                success: function () {
+                    alert("Upload Successful");
+                },
+                error: function () {
+                    alert("Check Internet Connection... Please Try Again !!!");
+                }
+            }).then(function (data) {
 
-    // A button will call this function
-    function getPhoto(source) {
-        // Retrieve image file location from specified source
-        navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-            quality: 50,
-            destinationType: destinationType.FILE_URI,
-            sourceType: source
-        });
-    }
-
-    // Called if something bad happens.
-    function onFail(message) {
-        alert('Failed because: ' + message);
-    }
-    function savePhoto(source) {
-
-    }
-
-    function uploadPictureServer(smallImage) {
-        debugger;
-        var formData = { str: smallImage , storenumber: $("#dd").val()};
-        $.ajax({
-            type: "POST",
-            data: formData,
-            url: "http://jarvis.smokinjoe.com/uploadpicture.asmx/prUploadPicture",
-            success: function(){  
-                alert("Upload Successful");
-            },
-            error: function() { 
-                alert("Check Internet Connection... Please Try Again !!!");
-        }       
-        }).then(function (data) {
-            
-            //alert(data.documentElement.innerHTML);
-            //debugger;
-            //$('.greeting-id').append(data.documentElement.innerHTML);
-            //$('.greeting-content').append(data.content);
-        });
-    }
-</script>
+                //alert(data.documentElement.innerHTML);
+                //debugger;
+                //$('.greeting-id').append(data.documentElement.innerHTML);
+                //$('.greeting-content').append(data.content);
+            });
+        }
+    </script>
 </head>
 <body>
-    <select name='mydropdown' id='dd'>
-  <option value="1">Store 1</option>
-  <option value="2">Store 2</option>
-  <option value="3">Store 3</option>
-  <option value="4">Store 4</option>
-</select>
-    <button onclick="capturePhoto();">Capture Photo</button>
-     <button onclick="uploadPictureServer('/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAIAAgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A/QpjtBJ6DngZr5++If7UUOna6ukeG7cS+VOkdzf3cbAKQ4DosRAY9CpJx7djX0Cc4OOD718Vj4M+IfDXjDTrudU1vGpMrwQISxxLjf8AhlW6Yx3+U18tjqleEY+x67s+vy6lh6kpe36LRd3qfVWnWPiG1y8uuC73qD5d3aINhzk/6vb05HU9vTJm8O+Kbm81m70TVbVLTVLeJbhGhYtFcxE4LpnkYb5Sp56Hoa53UPFGr+E7fTrSbRrnUFmQh7yF+IDk43nBAwMck89ACaj8PS3nib4mW2qy2f2O207Tri2SQyZ+0ea1u+5Rt4ACjv1P1q6c58yVyKtOnyt2PQtS1Oz0awnvr+6hsbKBDJLcXEgjjjUdSzHgD3NeV/D34yeGfi5488RWfha5ju7TRIrdpr9QR9olkMgIjVgPlURgFxwxfjoGPjPx4g0L48azZRXPxWs9N8NpZR3MemQzRLGszRSSDzQ0gLSZj2/MPlzgAHOeG+G3grQ/gZ4lTxR4d+Jmm3sqtZ2k9u8kXkXsM+oG3lBXeGGyNVnBHTHOBXp1KEpwa6nk08RGE02fWnj/AMa2eiaHBJ9u0+Ce7ne1S5vSAkGFZiSpxlgFAwSOWXJArK+B3i+TxcjObqO6e1QxSGODycK0cJQsgdwrcMCAxGVPpXlvxw8Q+DvG3h7X5rXxD4cj1S30i4u7fU4rpHkeWNIikUaeZnc7NMoyMfu1ODk47f8AZulg8OeFJdAsPE2l+I5I7kSpJH5PnKkiA/vTE5J+YPhmHQquTjjz6eErxq88rKKPSq43Dyo8kU3J+Wn+Z//Z');">Capture Photo</button>
-    <img style="display: none; width: 70px; height: 60px;" id="smallImage" src="" />
-    <img style="display: none;" id="largeImage" src="" />
+
+    <div data-role="page">
+
+        <div data-role="panel" id="panel" data-position="right" data-theme="a" data-display="push"></div>
+
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home">Home</a>
+            <h1>Cigarette Inventory</h1>
+
+        </div>
+
+        <div data-role="content" role="main">
+            <div data-role="fieldcontain">
+                <select name='mydropdown' id='dd' data-native-menu="false" data-theme="a">
+                    <option value="1">Store 1</option>
+                    <option value="2">Store 2</option>
+                    <option value="3">Store 3</option>
+                    <option value="4">Store 4</option>
+                </select>
+            </div>
+            <button onclick="capturePhoto();" >Take Picture&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" data-role="button" data-icon="flat-camera" data-iconpos="notext" data-theme="b" data-inline="true" class="ui-link ui-btn ui-btn-b ui-icon-flat-camera ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all" role="button">Camera</a></button>
+
+            <img style="display: none; width: 70px; height: 60px;" id="smallImage" src="" />
+            <img style="display: none;" id="largeImage" src="" />
+        </div>
+    </div>
 </body>
 </html>
